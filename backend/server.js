@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const authRoutes = require('./routes/auth');
+const boardRoutes = require('./routes/boards');
+const cardRoutes = require('./routes/cards');
 const requireAuth = require('./middleware/auth');
 const User = require('./models/User');
 
@@ -23,6 +25,10 @@ app.get('/api/health', (req, res) => {
 
 // Authentication routes
 app.use('/api/auth', authRoutes);
+
+// Board and card routes
+app.use('/api/boards', boardRoutes);
+app.use('/api/cards', cardRoutes);
 
 // Get currently logged-in user
 app.get('/api/auth/me', requireAuth, async (req, res) => {
@@ -64,3 +70,5 @@ mongoose
     console.error('MongoDB connection failed:', error.message);
     process.exit(1);
   });
+
+module.exports = app;
